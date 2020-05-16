@@ -1,6 +1,9 @@
-from app import app
+from flask_restful import Api
 
-@app.route('/')
-@app.route('/index')
-def index():
-    return 'Hello flask world'
+# from app import app
+from app.modules.users import Users
+
+def initRoutes(app):
+    api = Api(app)
+    # add user routes
+    api.add_resource(Users, '/user')
