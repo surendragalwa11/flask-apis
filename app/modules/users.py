@@ -2,21 +2,19 @@ from flask_restful import Resource
 
 class Users(Resource):
     def get(self):
+        print('get request')
         # get all users
-        return {'username': '1'}
+        return {'requestType': 'get'}
 
-    def getById(self):
-        # get user by id
-        print('getById')
+    def post(self):
+        print('create user')
+        return {'requestType': 'post'}
 
-    def create(self, studentInfo):
-        # create user by id
-        print('create')
+    def put(self):
+        print('update user')
+        return {'requestType': 'put'}
 
-    def update(self, studentInfo):
-        # update user by id
-        print('update')
-
-    def delete(self, studentInfo):
+    def delete(self):
         # delete user by id
-        print('delete')
+        print('delete user')
+        return {'requestType': 'delete'}
