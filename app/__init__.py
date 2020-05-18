@@ -1,15 +1,18 @@
 from flask import Flask
-from flask_sqlalchemy import SQLAlchemy
-from app.routes import initRoutes
 from app.models.user import db
 
-app = Flask(__name__)
 
-app.config['SQL_ALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:admin@123@127.0.0.1:3306/flask_db'
 
-db.init_app(app)
-# db = SQLAlchemy(app)
+def create_app(config_filename):
+    app = Flask(__name__)
+    app.config.from_object(config_filename)
+    from app.routes import api_bp
+    app.register_blueprint(api_bp, url_prefix='/api')
 
-initRoutes(app)
-# initModels(db)
+    from app.models.user import db
+    db.init_app(app)
+    # https://flask-sqlalchemy.palletsprojects.com/en/2.x/contexts/
+    with app.app_context():
+        db.create_all()
+    return app
 

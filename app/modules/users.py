@@ -63,6 +63,6 @@ class User(Resource):
         # delete user by id
         print('delete user by Id')
         getUser = User.query.get(userId)
-        db.sessio.delete(getUser)
+        db.session.delete(getUser)
         db.session.commit()
         return {'requestType': 'delete'}

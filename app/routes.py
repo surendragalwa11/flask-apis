@@ -1,10 +1,11 @@
 from flask_restful import Api
+from flask import Blueprint
 
-# from app import app
 from app.modules.users import Users, User
 
-def initRoutes(app):
-    api = Api(app)
-    # add user routes
-    api.add_resource(Users, '/users')
-    api.add_resource(User, '/user/<int:userId>')
+api_bp = Blueprint('api', __name__)
+
+api = Api(api_bp)
+# add user routes
+api.add_resource(Users, '/users')
+api.add_resource(User, '/user/<int:userId>')
