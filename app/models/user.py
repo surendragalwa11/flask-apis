@@ -1,3 +1,4 @@
+from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from marshmallow_sqlalchemy import ModelSchema
 from marshmallow import fields
@@ -12,20 +13,22 @@ class User(db.Model):
     contactNumber = db.Column(db.Integer)
     address = db.Column(db.String(25))
     role = db.Column(db.String(20))
+    creation_date = db.Column(db.TIMESTAMP, server_default=db.func.current_timestamp(), nullable=False)
 
     def create(self):
         db.session.add(self)
         db.session.commit()
         return self
+
     def __init__(self, email, password, contactNumber, address, role):
         self.email = email
         self.password = password
         self.contactNumber = contactNumber
         self.address = address
         self.role = role
+
     def __repr__(self):
         return '' % self.id
-# db.create_all()
 
 class UserSchema(ModelSchema):
     class Meta(ModelSchema.Meta):
@@ -37,6 +40,4 @@ class UserSchema(ModelSchema):
     contactNumber = fields.Number(required=True)
     address = fields.String(required=True)
     role = fields.String(required=True)
-
-# def initModels(db):
 
